@@ -32,4 +32,9 @@ class BookController {
         header("Location: index.php");
     }
 
+    public function create() {
+    $categories = Book::getCategories(); // metoda u modelu koja vraća sve kategorije
+    include "../views/books/create.php";
+}
+
 } 
