@@ -23,11 +23,13 @@ class BookController {
     }
 
     public function edit() {
-    $book = Book::find($_GET['id']);
-    include "../views/books/edit.php";
-}
+        $book = Book::find($_GET['id']);
+        include "../views/books/edit.php";
+    }
 
     public function update() {
-    Book::update($_POST['id'], $_POST['title'], $_POST['author'], $_POST['category_id']);
-    header("Location: index.php");
-}
+        Book::update($_POST['id'], $_POST['title'], $_POST['author'], $_POST['category_id']);
+        header("Location: index.php");
+    }
+
+} 
