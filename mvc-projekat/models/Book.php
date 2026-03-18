@@ -5,13 +5,13 @@ class Book {
 
     public static function all() {
         global $conn;
-        return $conn->query("SELECT * FROM books");
+        return $conn->query("SELECT books.*, categories.name AS category_name 
+                             FROM books LEFT JOIN categories ON books.category_id = categories.id");
     }
 
     public static function create($title, $author, $category_id) {
         global $conn;
-        $sql = "INSERT INTO books (title, author, category_id)
-                VALUES ('$title', '$author', '$category_id')";
+        $sql = "INSERT INTO books (title, author, category_id) VALUES ('$title', '$author', '$category_id')";
         return $conn->query($sql);
     }
 
@@ -32,7 +32,6 @@ class Book {
         return $result->fetch_assoc();
     }
 
-    // Nova metoda za dohvat svih kategorija
     public static function getCategories() {
         global $conn;
         $result = $conn->query("SELECT * FROM categories");
@@ -43,3 +42,4 @@ class Book {
         return $categories;
     }
 }
+?>
