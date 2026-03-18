@@ -1,7 +1,3 @@
-<?php
-
-?>
-
 <form method="POST" action="index.php?action=store" class="container mt-5">
 
     <input type="text" name="title" placeholder="Naslov" class="form-control mb-2" required>
