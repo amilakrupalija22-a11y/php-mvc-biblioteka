@@ -12,6 +12,12 @@ switch($action) {
     case 'store':
         $controller->store();
         break;
+    case 'edit':
+        $controller->edit();
+        break;
+    case 'update':
+        $controller->update();
+        break;
     case 'delete':
         $controller->delete();
         break;
