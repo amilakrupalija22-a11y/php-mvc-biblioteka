@@ -21,14 +21,25 @@ class Book {
     }
 
     public static function update($id, $title, $author, $category_id) {
-    global $conn;
-    $sql = "UPDATE books SET title='$title', author='$author', category_id='$category_id' WHERE id=$id";
-    return $conn->query($sql);
-}
+        global $conn;
+        $sql = "UPDATE books SET title='$title', author='$author', category_id='$category_id' WHERE id=$id";
+        return $conn->query($sql);
+    }
 
     public static function find($id) {
-    global $conn;
-    $result = $conn->query("SELECT * FROM books WHERE id=$id");
-    return $result->fetch_assoc();
-}
+        global $conn;
+        $result = $conn->query("SELECT * FROM books WHERE id=$id");
+        return $result->fetch_assoc();
+    }
+
+    // Nova metoda za dohvat svih kategorija
+    public static function getCategories() {
+        global $conn;
+        $result = $conn->query("SELECT * FROM categories");
+        $categories = [];
+        while($row = $result->fetch_assoc()) {
+            $categories[] = $row;
+        }
+        return $categories;
+    }
 }
