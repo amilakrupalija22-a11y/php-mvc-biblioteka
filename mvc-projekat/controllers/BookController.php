@@ -8,10 +8,6 @@ class BookController {
         include "../views/books/index.php";
     }
 
-    public function create() {
-        include "../views/books/create.php";
-    }
-
     public function store() {
         Book::create($_POST['title'], $_POST['author'], $_POST['category_id']);
         header("Location: index.php");
@@ -33,7 +29,7 @@ class BookController {
     }
 
     public function create() {
-    $categories = Book::getCategories(); // metoda u modelu koja vraća sve kategorije
+    $categories = Book::getCategories(); // dohvat svih kategorija iz baze
     include "../views/books/create.php";
 }
 
