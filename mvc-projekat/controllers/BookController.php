@@ -21,4 +21,13 @@ class BookController {
         Book::delete($_GET['id']);
         header("Location: index.php");
     }
+
+    public function edit() {
+    $book = Book::find($_GET['id']);
+    include "../views/books/edit.php";
+}
+
+    public function update() {
+    Book::update($_POST['id'], $_POST['title'], $_POST['author'], $_POST['category_id']);
+    header("Location: index.php");
 }
