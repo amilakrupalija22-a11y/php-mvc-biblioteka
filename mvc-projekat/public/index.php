@@ -2,7 +2,6 @@
 require_once "../controllers/BookController.php";
 
 $controller = new BookController();
-
 $action = $_GET['action'] ?? 'index';
 
 switch($action) {
@@ -24,3 +23,4 @@ switch($action) {
     default:
         $controller->index();
 }
+?>
