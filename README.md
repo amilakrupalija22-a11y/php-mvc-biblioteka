@@ -1,4 +1,4 @@
-📚 Biblioteka knjiga
+## 📚 Biblioteka knjiga
 
 ## Opis projekta
 Ova web aplikacija je **MVC biblioteka knjiga** izrađena u PHP-u i MySQL-u.  
