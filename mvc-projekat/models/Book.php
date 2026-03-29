@@ -1,45 +1,43 @@
 <?php
-require_once "../config/database.php";
-
 class Book {
+    private $conn;
 
-    public static function all() {
-        global $conn;
-        return $conn->query("SELECT books.*, categories.name AS category_name 
-                             FROM books LEFT JOIN categories ON books.category_id = categories.id");
+    public function __construct($db) {
+        $this->conn = $db;
     }
 
-    public static function create($title, $author, $category_id) {
-        global $conn;
-        $sql = "INSERT INTO books (title, author, category_id) VALUES ('$title', '$author', '$category_id')";
-        return $conn->query($sql);
+    public function getAll() {
+        return $this->conn->query("
+            SELECT books.*, categories.name as category
+            FROM books
+            LEFT JOIN categories ON books.category_id = categories.id
+        ");
     }
 
-    public static function delete($id) {
-        global $conn;
-        return $conn->query("DELETE FROM books WHERE id=$id");
+    public function create($title, $author, $category_id) {
+        $stmt = $this->conn->prepare("
+            INSERT INTO books (title, author, category_id)
+            VALUES (?, ?, ?)
+        ");
+        return $stmt->execute([$title, $author, $category_id]);
     }
 
-    public static function update($id, $title, $author, $category_id) {
-        global $conn;
-        $sql = "UPDATE books SET title='$title', author='$author', category_id='$category_id' WHERE id=$id";
-        return $conn->query($sql);
+    public function delete($id) {
+        $stmt = $this->conn->prepare("DELETE FROM books WHERE id=?");
+        return $stmt->execute([$id]);
     }
 
-    public static function find($id) {
-        global $conn;
-        $result = $conn->query("SELECT * FROM books WHERE id=$id");
-        return $result->fetch_assoc();
+    public function getById($id) {
+        $stmt = $this->conn->prepare("SELECT * FROM books WHERE id=?");
+        $stmt->execute([$id]);
+        return $stmt->fetch();
     }
 
-    public static function getCategories() {
-        global $conn;
-        $result = $conn->query("SELECT * FROM categories");
-        $categories = [];
-        while($row = $result->fetch_assoc()) {
-            $categories[] = $row;
-        }
-        return $categories;
+    public function update($id, $title, $author, $category_id) {
+        $stmt = $this->conn->prepare("
+            UPDATE books SET title=?, author=?, category_id=?
+            WHERE id=?
+        ");
+        return $stmt->execute([$title, $author, $category_id, $id]);
     }
 }
-?>
