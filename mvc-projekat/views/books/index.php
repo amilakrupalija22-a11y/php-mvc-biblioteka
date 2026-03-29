@@ -1,35 +1,27 @@
-<!DOCTYPE html>
-<html>
-<head>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="container mt-5">
+<?php include "../views/layout/header.php"; ?>
 
-<h2>Knjige</h2>
-<a href="index.php?action=create" class="btn btn-success mb-3">Dodaj knjigu</a>
+<a href="index.php?action=create" class="btn btn-primary mb-3">Dodaj knjigu</a>
 
-<table class="table table-bordered">
-<tr>
-    <th>ID</th>
-    <th>Naslov</th>
-    <th>Autor</th>
-    <th>Kategorija</th>
-    <th>Akcije</th>
-</tr>
+<table class="table table-striped">
+    <tr>
+        <th>Naslov</th>
+        <th>Autor</th>
+        <th>Kategorija</th>
+        <th>Akcije</th>
+    </tr>
 
-<?php while($row = $books->fetch_assoc()): ?>
-<tr>
-    <td><?= $row['id'] ?></td>
-    <td><?= $row['title'] ?></td>
-    <td><?= $row['author'] ?></td>
-    <td><?= $row['category_name'] ?></td>
-    <td>
-        <a href="index.php?action=edit&id=<?= $row['id'] ?>" class="btn btn-warning">Uredi</a>
-        <a href="index.php?action=delete&id=<?= $row['id'] ?>" onclick="return confirm('Da li si sigurna?')" class="btn btn-danger">Obriši</a>
-    </td>
-</tr>
-<?php endwhile; ?>
-
+    <?php foreach($books as $b): ?>
+    <tr>
+        <td><?= $b['title'] ?></td>
+        <td><?= $b['author'] ?></td>
+        <td><?= $b['category'] ?></td>
+        <td>
+            <a href="index.php?action=edit&id=<?= $b['id'] ?>" class="btn btn-warning btn-sm">Edit</a>
+            <a href="index.php?action=delete&id=<?= $b['id'] ?>" 
+               class="btn btn-danger btn-sm delete-btn">Delete</a>
+        </td>
+    </tr>
+    <?php endforeach; ?>
 </table>
-</body>
-</html>
+
+<?php include "../views/layout/footer.php"; ?>
