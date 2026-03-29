@@ -8,7 +8,7 @@ class Book {
 
     public function getAll() {
         return $this->conn->query("
-            SELECT books.*, categories.name as category
+            SELECT books.*, categories.name AS category
             FROM books
             LEFT JOIN categories ON books.category_id = categories.id
         ");
@@ -30,7 +30,7 @@ class Book {
     public function getById($id) {
         $stmt = $this->conn->prepare("SELECT * FROM books WHERE id=?");
         $stmt->execute([$id]);
-        return $stmt->fetch();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function update($id, $title, $author, $category_id) {
