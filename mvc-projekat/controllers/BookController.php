@@ -2,36 +2,36 @@
 require_once "../models/Book.php";
 
 class BookController {
+    private $book;
+
+    public function __construct($db) {
+        $this->book = new Book($db);
+    }
 
     public function index() {
-        $books = Book::all();
+        $books = $this->book->getAll();
         include "../views/books/index.php";
     }
 
     public function create() {
-        $categories = Book::getCategories();
+        if ($_POST) {
+            $this->book->create($_POST['title'], $_POST['author'], $_POST['category_id']);
+            header("Location: index.php");
+        }
         include "../views/books/create.php";
     }
 
-    public function store() {
-        Book::create($_POST['title'], $_POST['author'], $_POST['category_id']);
+    public function delete() {
+        $this->book->delete($_GET['id']);
         header("Location: index.php");
     }
 
     public function edit() {
-        $book = Book::find($_GET['id']);
-        $categories = Book::getCategories();
+        if ($_POST) {
+            $this->book->update($_POST['id'], $_POST['title'], $_POST['author'], $_POST['category_id']);
+            header("Location: index.php");
+        }
+        $book = $this->book->getById($_GET['id']);
         include "../views/books/edit.php";
     }
-
-    public function update() {
-        Book::update($_POST['id'], $_POST['title'], $_POST['author'], $_POST['category_id']);
-        header("Location: index.php");
-    }
-
-    public function delete() {
-        Book::delete($_GET['id']);
-        header("Location: index.php");
-    }
 }
-?>
